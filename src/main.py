@@ -26,10 +26,10 @@ def callback_inline(call):
                 text="Выберите страну: ",reply_markup = keyboard.country())
         elif call.data == "state":
             bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
-                text="Выберите страну: ",reply_markup = keyboard.state())
+                text="Выберите штат/область: ",reply_markup = keyboard.state())
         elif call.data == "city":
             bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
-                text="Выберите страну: ",reply_markup = keyboard.city())
+                text="Выберите город: ",reply_markup = keyboard.city())
         
   
 
