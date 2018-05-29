@@ -112,7 +112,6 @@ def in_zip(call):
 def create_keyboard(row):
     markup = telebot.types.InlineKeyboardMarkup()
     myset = set(row)
-    print(myset)
     for elem in myset :
         markup.add(telebot.types.InlineKeyboardButton(text = elem[0], callback_data = elem[0]))
     return markup
