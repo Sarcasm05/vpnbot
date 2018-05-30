@@ -37,7 +37,7 @@ def select_vpn(choice):
     vpn = bd.select_vpn(choice)
     bd.close()
     return vpn
-    
+
 def country():       
     bd = liter(database_name) 
     row = bd.select_country()
@@ -114,4 +114,5 @@ def create_keyboard(row):
     myset = set(row)
     for elem in myset :
         markup.add(telebot.types.InlineKeyboardButton(text = elem[0], callback_data = elem[0]))
+    markup.add(telebot.types.InlineKeyboardButton(text = "Вернуться в главное меню", callback_data = 'menu'))
     return markup
