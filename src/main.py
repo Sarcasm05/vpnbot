@@ -54,12 +54,27 @@ def callback_inline(call):
             string = ""
             for word in vpn:
                 string += str(word) + " "
-            bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
-                text="Выш выбор \n" + string + "\nВыберите cпособ оплаты :\nu324iuy23pu4p23u4y23\n 23784623478643284 ")            
-        if func.select_user_state(call.from_user.id) == 4:
-            pass
-  
 
+            markup = telebot.types.InlineKeyboardMarkup()
+            markup.add(telebot.types.InlineKeyboardButton(text = 'qiwi', callback_data = 'qiwi'))
+            markup.add(telebot.types.InlineKeyboardButton(text = 'bitcoin', callback_data = 'bitcoin'))
+            markup.add(telebot.types.InlineKeyboardButton(text = 'litecoin', callback_data = 'litecoin'))
+            markup.add(telebot.types.InlineKeyboardButton(text = 'Вернуться в меню', callback_data = 'menu'))
+
+            bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
+                text="Выберите cпособ оплаты :",reply_markup = markup)            
+        if func.select_user_state(call.from_user.id) == 4 and call.data == 'qiwi':
+            bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
+                text="Значение qiwi")
+        if func.select_user_state(call.from_user.id) == 4 and call.data == 'bitcoin':
+            bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
+                text="Значение qiwi")
+        if func.select_user_state(call.from_user.id) == 4 and call.data == 'litecoin':
+            bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
+                text="Значение qiwi")
+        if call.data == 'menu':
+            bot.send_message(message.from_user.id, 'Выберите пункт меню : ', reply_markup=keyboard.buy_menu())
+            func.change_user_state(message.from_user.id, 0)
 
 if __name__ == "__main__":
     bot.polling(none_stop=True)	
