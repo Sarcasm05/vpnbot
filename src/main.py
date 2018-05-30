@@ -73,8 +73,8 @@ def callback_inline(call):
             bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
                 text="Значение qiwi")
         if call.data == 'menu':
-            bot.send_message(message.from_user.id, 'Выберите пункт меню : ', reply_markup=keyboard.buy_menu())
-            func.change_user_state(message.from_user.id, 0)
+            bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text = 'Выберите пункт меню : ', reply_markup=keyboard.buy_menu())
+            func.change_user_state(call.from_user.id, 0)
 
 if __name__ == "__main__":
     bot.polling(none_stop=True)	
