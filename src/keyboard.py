@@ -32,8 +32,6 @@ class Keyboard:
     def buy_menu(self):
         buy_markup = telebot.types.InlineKeyboardMarkup()
         buy_markup.add(telebot.types.InlineKeyboardButton(text = 'Выбрать страну', callback_data = 'country'))
-        #buy_markup.add(telebot.types.InlineKeyboardButton(text = 'Выбрать область/штат', callback_data = 'state'))
-        #buy_markup.add(telebot.types.InlineKeyboardButton(text = 'Выбрать город', callback_data = 'city'))
         return buy_markup
 
     def main_menu(self):
