@@ -34,30 +34,30 @@ def csv_reader(file_obj):
         site = row[3]
         ip = row[4]
         
-        continentCode = "4134312"
-        continentName = "4352421313"
-        countryCode = "543754323141"
-        countryName = "n4316351423"
-        isEuMember = "431623453143"
-        currencyCode = "13462421342"
-        currencyName = "136423152154"
-        phonePrefix = "321643243242142"
-        languages = "43554"
-        stateProv = "цкайцвс"
-        district = "321423выфпфцйЙ"
-        city = "ФЖДЛФЫОЛДОЛЫо"
-        geonameId = "ваыылодфьдфалац"
-        latitude = "432авфввфа"
-        longitude = "аптыфв"
-        gmtOffset = "фукафмффцуа"
-        timeZone = "лотвыил"
-        asNumber = "ыдлафыдтолфуаф"
-        asName = "оавыфы"
-        isp = "афылщзофваышощфаы"
-        organization = "втавыощфаыщшо"
-        isCrawler = "афыощфаозшщ"
-        isProxy = "азщвыаощшфыкшфпова"
-        threatLevel = "уцйа2ащш43"
+        continentCode = "none"
+        continentName = "none"
+        countryCode = "none"
+        countryName = "none"
+        isEuMember = "none"
+        currencyCode = "none"
+        currencyName = "none"
+        phonePrefix = "none"
+        languages = "none"
+        stateProv = "none"
+        district = "none"
+        city = "none"
+        geonameId = "none"
+        latitude = "none"
+        longitude = "none"
+        gmtOffset = "none"
+        timeZone = "none"
+        asNumber = "none"
+        asName = "none"
+        isp = "none"
+        organization = "none"
+        isCrawler = "none"
+        isProxy = "none"
+        threatLevel = "none"
         
         for word in row:
            
@@ -133,13 +133,13 @@ def csv_reader(file_obj):
                 isProxy = row[1]
             if "threatLevel" in word:
                 row = word.split(': ')
-                continentName = row[1]
-            if "continentName" in word:
+                threatLevel = row[1]
+            if "organization" in word:
                 row = word.split(': ')
-                continentName = row[1]
-            if "continentName" in word:
+                organization = row[1]
+            if "currencyName" in word:
                 row = word.split(': ')
-                continentName = row[1]
+                currencyName = row[1]
            
             
         add_filename(filename, login, password, site, ip, continentCode, continentName, 
