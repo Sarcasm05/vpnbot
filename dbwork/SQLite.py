@@ -8,7 +8,7 @@ class liter:
         self.cursor = self.connection.cursor()
 
     def add_filename(self, filename, login, password, site, ip, continentCode, continentName, countryCode, countryName, isEuMember, currencyCode, currencyName, phonePrefix, languages, stateProv, district, city, geonameId, latitude, longitude, gmtOffset, timeZone, asNumber, asName, isp, organization, isCrawler, isProxy, threatLevel):
-        #добавляем пользователя
+        #добавляем данные файлаS
         with self.connection:
             return self.cursor.execute('INSERT INTO vpns VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',(filename, login, password, site, ip, continentCode, continentName, countryCode, countryName, isEuMember, currencyCode, currencyName, phonePrefix, languages, stateProv, district, city, geonameId, latitude, longitude, gmtOffset, timeZone, asNumber, asName, isp, organization, isCrawler, isProxy, threatLevel,)); 
 
