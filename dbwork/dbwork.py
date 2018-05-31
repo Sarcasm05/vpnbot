@@ -11,8 +11,8 @@ def add_filename(filename, login, password, site, ip, continentCode, continentNa
     db.close()
 
 def exist(word, string):
-    newrow = string
     if word in string:
+        
         """
         newrow = ""
         flag = False
@@ -22,11 +22,8 @@ def exist(word, string):
             if flag == True:
                 newrow += elem
         """
-        row = word.split(': ')
-        newrow = row[1]
-        return newrow
-    else :
-        return "none"
+        row = string.split(': ')
+        return row[1]
 
 def csv_reader(file_obj):
     """
@@ -89,7 +86,6 @@ def csv_reader(file_obj):
             isProxy = exist("isProxy", word)
             asNumber = exist("asNumber", word)
             threatLevel = exist("threatLevel", word)
-            print(continentCode)
             
         """
         add_filename(filename, login, password, site, ip, continentCode, continentName, 
