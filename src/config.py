@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
 
-token = "537937070:AAH_WnuRJyB-ItBtPy8mx1RmncGT-wibpUA"
+token = "548926033:AAEI5MZ1YuSSKnb0fVLFBJ5TeaDJHnsw6uk"
 database_name = "vpn.db"
-

@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
+
+#update monsherko
 import sqlite3
 
-class liter:
+class Liter:
 
     def __init__(self, database):
         self.connection = sqlite3.connect(database)
@@ -21,7 +23,7 @@ class liter:
         #выбираем все страны
         with self.connection:
             return self.cursor.execute('SELECT country FROM vpns').fetchall()
-    
+
     def in_country(self, call):
         with self.connection:
             return self.cursor.execute('SELECT * FROM vpns WHERE country = ?', (call,)).fetchall()
@@ -38,7 +40,7 @@ class liter:
     def select_city(self, state):
         #выбираем все города
         with self.connection:
-            return self.cursor.execute('SELECT city FROM vpns WHERE state = ?',(state,)).fetchall()      
+            return self.cursor.execute('SELECT city FROM vpns WHERE state = ?',(state,)).fetchall()
 
     def in_city(self, call):
         with self.connection:
@@ -70,7 +72,7 @@ class liter:
     def add_user(self, user_id):
         #добавляем пользователя
         with self.connection:
-            return self.cursor.execute('INSERT INTO users VALUES(?,?,?)',(user_id, 0, 'null'));            
+            return self.cursor.execute('INSERT INTO users VALUES(?,?,?)',(user_id, 0, 'null'));
 
     def select_user(self, user_id):
         #выбираем пользователя
@@ -95,4 +97,3 @@ class liter:
     def close(self):
         """ Закрываем текущее соединение с БД """
         self.connection.close()
-    

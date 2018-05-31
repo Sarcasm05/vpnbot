@@ -2,77 +2,77 @@
 import sqlite3
 from config import database_name
 import telebot
-from SQLite import liter
+from core.SQLite import Liter
 
 def add_user(user_id):
-    bd = liter(database_name)
+    bd = Liter(database_name)
     bd.add_user(user_id)
     bd.close()
 
 def autorisation(user_id):
-    bd = liter(database_name)
+    bd = Liter(database_name)
     if not bd.select_user(user_id):
         return 0
     else :
         return 1
 
 def change_user_state(user_id, state):
-    bd = liter(database_name)
+    bd = Liter(database_name)
     bd.update_user_state(user_id, state)
     bd.close()
 
 def update_user_choice(user_id, choice):
-    bd = liter(database_name)
+    bd = Liter(database_name)
     bd.update_user_choice(user_id, choice)
     bd.close()
 
 def select_user_state(user_id):
-    bd = liter(database_name)
+    bd = Liter(database_name)
     state = bd.select_user_state(user_id)
     bd.close()
     return state
 
 def select_vpn(choice):
-    bd = liter(database_name)
+    bd = Liter(database_name)
     vpn = bd.select_vpn(choice)
     bd.close()
     return vpn
 
-def country():       
-    bd = liter(database_name) 
+def country():
+    bd = Liter(database_name)
     row = bd.select_country()
     bd.close()
     return row
 
 def state(country):
-    bd = liter(database_name) 
+    bd = Liter(database_name)
     row = bd.select_state(country)
     bd.close()
     return row
 
 def city(state):
-    bd = liter(database_name) 
+    bd = Liter(database_name)
     row = bd.select_city(state)
     bd.close()
     return row
 
 def our_choice(city):
-    bd = liter(database_name)
+    bd = Liter(database_name)
     row = bd.our_choice(city)
     bd.close()
     return row
 
 def exist(call):
-    bd = liter(database_name) 
+    bd = Liter(database_name)
     if len(bd.exist(call)) == 0:
         bd.close()
         return False
-    else : 
+    else :
         bd.close()
         return True
 
 def in_country(call):
-    bd = liter(database_name)
+    bd = Liter(database_name)
     if not bd.in_country(call):
         bd.close()
         return 0
@@ -81,7 +81,7 @@ def in_country(call):
         return 1
 
 def in_state(call):
-    bd = liter(database_name)
+    bd = Liter(database_name)
     if not bd.in_state(call):
         bd.close()
         return 0
@@ -90,7 +90,7 @@ def in_state(call):
         return 1
 
 def in_city(call):
-    bd = liter(database_name)
+    bd = Liter(database_name)
     if not bd.in_city(call):
         bd.close()
         return 0
@@ -99,7 +99,7 @@ def in_city(call):
         return 1
 
 def in_zip(call):
-    bd = liter(database_name)
+    bd = Liter(database_name)
     if not bd.in_zip(call):
         bd.close()
         return 0
