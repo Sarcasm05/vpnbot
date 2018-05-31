@@ -50,11 +50,12 @@ def callback_inline(call):
         if func.select_user_state(call.from_user.id) == 3 and func.in_zip(call.data):
             func.update_user_choice(call.from_user.id, call.data)
             func.change_user_state(call.from_user.id, 4)
+            """
             vpn = func.select_vpn(call.data)
             string = ""
             for word in vpn:
                 string += str(word) + " "
-
+            """
             markup = telebot.types.InlineKeyboardMarkup()
             markup.add(telebot.types.InlineKeyboardButton(text = 'qiwi', callback_data = 'qiwi'))
             markup.add(telebot.types.InlineKeyboardButton(text = 'bitcoin', callback_data = 'bitcoin'))
@@ -73,7 +74,7 @@ def callback_inline(call):
             bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
                 text="Значение qiwi")
         if call.data == 'menu':
-            bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text = 'Выберите пункт меню : ', reply_markup=keyboard.buy_menu())
+            bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text='Выберите пункт меню : ', reply_markup=keyboard.buy_menu())
             func.change_user_state(call.from_user.id, 0)
 
 if __name__ == "__main__":
