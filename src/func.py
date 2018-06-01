@@ -73,12 +73,12 @@ def exist(call):
 
 def in_country(call):
     bd = Liter(database_name)
+    sign = 1
     if not bd.in_country(call):
-        bd.close()
-        return 0
-    else :
-        bd.close()
-        return 1
+        sign = 0
+    bd.close()
+
+    return sign
 
 def in_state(call):
     bd = Liter(database_name)
