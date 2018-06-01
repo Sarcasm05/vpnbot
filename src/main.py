@@ -2,7 +2,7 @@ import telebot
 import config
 import keyboard
 import func
- 
+
 bot = telebot.TeleBot(config.token)
 keyboard = keyboard.Keyboard(bot)
 
@@ -31,7 +31,7 @@ def callback_inline(call):
         if (call.data == "country" and func.select_user_state(call.from_user.id) == 0 ):
             bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
                 text="Выберите страну: ",reply_markup = keyboard.country())
-        
+
         if func.select_user_state(call.from_user.id) == 0 and func.in_country(call.data):
             bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
                 text="Выберите штат: ",reply_markup = keyboard.state(call.data))
@@ -63,7 +63,7 @@ def callback_inline(call):
             markup.add(telebot.types.InlineKeyboardButton(text = 'Вернуться в меню', callback_data = 'menu'))
 
             bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
-                text="Выберите cпособ оплаты :",reply_markup = markup)            
+                text="Выберите cпособ оплаты :",reply_markup = markup)
         if func.select_user_state(call.from_user.id) == 4 and call.data == 'qiwi':
             bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
                 text="Значение qiwi")
@@ -78,4 +78,4 @@ def callback_inline(call):
             func.change_user_state(call.from_user.id, 0)
 
 if __name__ == "__main__":
-    bot.polling(none_stop=True)	
+    bot.polling(none_stop=True)

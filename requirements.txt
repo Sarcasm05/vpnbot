@@ -1,1 +1,6 @@
 pytelegrambotapi
+setuptools
+ez_setup
+unroll
+mysqlclient
+
