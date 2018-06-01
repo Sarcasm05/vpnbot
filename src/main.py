@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import telebot
 import config
 import keyboard
@@ -15,7 +16,7 @@ def cmd_start(message):
     else:
         func.add_user(message.from_user.id)
         bot.send_message(message.chat.id, "Стартовое окно, купи vpn уебок!", reply_markup = keyboard.main_menu())
-
+        
 
 @bot.message_handler(func=lambda mess: "Купить vpn" == mess.text, content_types=['text'])
 def handle_text(message):
@@ -24,14 +25,19 @@ def handle_text(message):
 
 
 
+
 #обработчик коллбеков
 @bot.callback_query_handler(func=lambda call: True)
 def callback_inline(call):
     if call.message:
-        if (call.data == "country" and func.select_user_state(call.from_user.id) == 0 ):
+        if call.data == "country" and func.select_user_state(call.from_user.id) == 0 :
             bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
                 text="Выберите страну: ",reply_markup = keyboard.country())
 
+<<<<<<< HEAD
+=======
+        
+>>>>>>> 5576e96c4856337d4dc9907631f15959d4271f87
         if func.select_user_state(call.from_user.id) == 0 and func.in_country(call.data):
             bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
                 text="Выберите штат: ",reply_markup = keyboard.state(call.data))
@@ -69,10 +75,10 @@ def callback_inline(call):
                 text="Значение qiwi")
         if func.select_user_state(call.from_user.id) == 4 and call.data == 'bitcoin':
             bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
-                text="Значение qiwi")
+                text="Значение bitcoin")
         if func.select_user_state(call.from_user.id) == 4 and call.data == 'litecoin':
             bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
-                text="Значение qiwi")
+                text="Значение litecoin")
         if call.data == 'menu':
             bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text='Выберите пункт меню : ', reply_markup=keyboard.buy_menu())
             func.change_user_state(call.from_user.id, 0)

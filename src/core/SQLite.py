@@ -22,22 +22,46 @@ class Liter:
     def select_country(self):
         #выбираем все страны
         with self.connection:
-            return self.cursor.execute('SELECT country FROM vpns').fetchall()
-
+            return self.cursor.execute('SELECT countryName FROM vpns').fetchall()
+    
     def in_country(self, call):
         with self.connection:
-            return self.cursor.execute('SELECT * FROM vpns WHERE country = ?', (call,)).fetchall()
+            return self.cursor.execute('SELECT * FROM vpns WHERE countryName = ?', (call,)).fetchall()
 
     def select_state(self, country):
         #выбираем все штаты
         with self.connection:
-            return self.cursor.execute('SELECT state FROM vpns WHERE country = ?',(country,)).fetchall()
+            return self.cursor.execute('SELECT stateProv FROM vpns WHERE countryName = ?',(country,)).fetchall()
 
     def in_state(self, call):
         with self.connection:
-            return self.cursor.execute('SELECT * FROM vpns WHERE state = ?', (call,)).fetchone()
+            return self.cursor.execute('SELECT * FROM vpns WHERE stateProv = ?', (call,)).fetchone()
 
     def select_city(self, state):
+        #выбираем все города
+        with self.connection:
+            return self.cursor.execute('SELECT city FROM vpns WHERE stateProv = ?',(state,)).fetchall()      
+
+    def in_city(self, call):
+        with self.connection:
+            return self.cursor.execute('SELECT * FROM vpns WHERE city = ?', (call,)).fetchone()
+
+    def in_zip(self, call):
+        with self.connection:
+            return self.cursor.execute('SELECT * FROM vpns WHERE geonameId = ?', (call,)).fetchone()
+
+    def select_vpn(self, call):
+        with self.connection:
+            return self.cursor.execute('SELECT * FROM vpns WHERE geonameId = ?', (call,)).fetchone()
+
+    def our_choice(self, city):
+        with self.connection:
+            return self.cursor.execute('SELECT geonameId FROM vpns WHERE city = ?',(city,)).fetchall()
+
+    def count_rows(self):
+        #Считаем количество строк
+        with self.connection:
+            result = self.cursor.execute('SELECT * FROM vpns').fetchall()
         #выбираем все города
         with self.connection:
             return self.cursor.execute('SELECT city FROM vpns WHERE state = ?',(state,)).fetchall()
