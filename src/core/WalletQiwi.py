@@ -25,15 +25,15 @@ class ReplaceException(Exception):
 
 class QApi(object):
 
-    __private_header = {'Accept' : 'application/json', 'Content-Type' : 'application/json','Authorization' : 'Bearer' }
-    __private_url_pay = 'https://edge.qiwi.com/payment-history/v1/persons/%s/payments'
-    __private_url_current = 'https://edge.qiwi.com/funding-sources/v1/accounts/current'
+    private_header = {'Accept' : 'application/json', 'Content-Type' : 'application/json','Authorization' : 'Bearer' }
+    private_url_pay = 'https://edge.qiwi.com/payment-history/v1/persons/%s/payments'
+    private_url_current = 'https://edge.qiwi.com/funding-sources/v1/accounts/current'
 
     def __init__(self, token, phone, delay=1):
 
         self._s = requests.Session()
-        __private_header['Authorization'] = 'Bearer ' + token
-        self._s.headers  = __private_header
+        self.private_header['Authorization'] = 'Bearer ' + token
+        self._s.headers  = self.private_header
         self.phone = phone
         self._inv = {}
         self._echo = None
@@ -87,7 +87,7 @@ class QApi(object):
         }
 
         response = self._s.get(
-            url= __private_url_pay % self.phone,
+            url= self.private_url_pay % self.phone,
             params=post_args
         )
 
@@ -97,7 +97,7 @@ class QApi(object):
             raise QiwiAPIException(data)
 
         return data
-    def bill(self, price, comment=uuid4(), currency=643):
+    def bill(self, comment, price=150, currency=643):
 
         comment = str(comment)
 
@@ -116,7 +116,7 @@ class QApi(object):
     def _get_balance(self):
 
 
-        response = self._s.get(__private_url_current)
+        response = self._s.get(private_url_current)
 
         if response is None:
             raise InvalidLexemException('Invalid token!')
