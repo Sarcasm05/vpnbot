@@ -26,15 +26,50 @@ def update_user_choice(user_id, choice):
     bd.update_user_choice(user_id, choice)
     bd.close()
 
+def update_user_token(user_id, token):
+    bd = Liter(database_name)
+    bd.update_user_token(user_id, token)
+    bd.close()
+
+def update_user_payment_status(user_id, status):
+    bd = Liter(database_name)
+    bd.update_user_payment_status(user_id, status)
+    bd.close()
+
+
 def select_user_state(user_id):
     bd = Liter(database_name)
     state = bd.select_user_state(user_id)
     bd.close()
     return state
 
-def select_vpn(choice):
+def select_user_choice(user_id):
     bd = Liter(database_name)
-    vpn = bd.select_vpn(choice)
+    choice = bd.select_user_choice(user_id)
+    bd.close()
+    return choice
+
+def select_user_token(user_id):
+    bd = Liter(database_name)
+    token = bd.select_user_token(user_id)
+    bd.close()
+    return token
+
+def select_user_payment_status(user_id):
+    bd = Liter(database_name)
+    status = bd.select_user_payment_status(user_id)
+    bd.close()
+    return status
+
+def select_namefile(choice):
+    bd = Liter(database_name)
+    vpn = bd.select_namefile(choice)
+    bd.close()
+    return vpn
+
+def select_namefile_none(choice):
+    bd = Liter(database_name)
+    vpn = bd.select_namefile_none(choice)
     bd.close()
     return vpn
 
@@ -113,6 +148,7 @@ def create_keyboard(row):
     markup = telebot.types.InlineKeyboardMarkup()
     myset = set(row)
     for elem in myset :
-        markup.add(telebot.types.InlineKeyboardButton(text = elem[0], callback_data = elem[0]))
-    markup.add(telebot.types.InlineKeyboardButton(text = "Вернуться в главное меню", callback_data = 'menu'))
+        if type(elem[0]) != type(None):
+            markup.add(telebot.types.InlineKeyboardButton(text = elem[0], callback_data = elem[0]))
+    markup.add(telebot.types.InlineKeyboardButton(text = "Вернуться в главное меню", callback_data = 'menu'))    
     return markup

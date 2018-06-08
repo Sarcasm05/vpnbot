@@ -48,39 +48,40 @@ class Liter:
 
     def in_zip(self, call):
         with self.connection:
-            return self.cursor.execute('SELECT * FROM vpns WHERE geonameId = ?', (call,)).fetchone()
+            return self.cursor.execute('SELECT * FROM vpns WHERE zipCode = ?', (call,)).fetchone()
 
     def select_vpn(self, call):
         with self.connection:
-            return self.cursor.execute('SELECT * FROM vpns WHERE geonameId = ?', (call,)).fetchone()
+            return self.cursor.execute('SELECT * FROM vpns WHERE zipCode = ?', (call,)).fetchone()
 
     def our_choice(self, city):
         with self.connection:
-            return self.cursor.execute('SELECT geonameId FROM vpns WHERE city = ?',(city,)).fetchall()
+            return self.cursor.execute('SELECT zipCode FROM vpns WHERE city = ?',(city,)).fetchall()
 
     def count_rows(self):
         #Считаем количество строк
         with self.connection:
             result = self.cursor.execute('SELECT * FROM vpns').fetchall()
-        #выбираем все города
-        with self.connection:
-            return self.cursor.execute('SELECT city FROM vpns WHERE state = ?',(state,)).fetchall()
-
+        
     def in_city(self, call):
         with self.connection:
             return self.cursor.execute('SELECT * FROM vpns WHERE city = ?', (call,)).fetchone()
 
     def in_zip(self, call):
         with self.connection:
-            return self.cursor.execute('SELECT * FROM vpns WHERE zip = ?', (call,)).fetchone()
+            return self.cursor.execute('SELECT * FROM vpns WHERE zipCode = ?', (call,)).fetchone()
 
-    def select_vpn(self, call):
+    def select_namefile_none(self, call):
         with self.connection:
-            return self.cursor.execute('SELECT * FROM vpns WHERE zip = ?', (call,)).fetchone()
+            return self.cursor.execute('SELECT namefile FROM vpns WHERE city = ?', (call,)).fetchone()
+
+    def select_namefile(self, call):
+        with self.connection:
+            return self.cursor.execute('SELECT namefile FROM vpns WHERE city = ?', (call,)).fetchone()
 
     def our_choice(self, city):
         with self.connection:
-            return self.cursor.execute('SELECT zip FROM vpns WHERE city = ?',(city,)).fetchall()
+            return self.cursor.execute('SELECT zipCode FROM vpns WHERE city = ?',(city,)).fetchall()
 
     def count_rows(self):
         #Считаем количество строк
@@ -108,6 +109,22 @@ class Liter:
         with self.connection:
             return self.cursor.execute('SELECT state FROM users WHERE user_id = ?', (user_id,)).fetchone()[0]
 
+    def select_user_choice(self, user_id):
+        #узнаем статус пользователя
+        with self.connection:
+            return self.cursor.execute('SELECT choice FROM users WHERE user_id = ?', (user_id,)).fetchone()[0]
+
+    def select_user_token(self, user_id):
+        
+        with self.connection:
+            return self.cursor.execute('SELECT token FROM users WHERE user_id = ?', (user_id,)).fetchone()[0]
+
+    def select_user_payment_status(self, user_id):
+        
+        with self.connection:
+            return self.cursor.execute('SELECT payment_status FROM users WHERE user_id = ?', (user_id,)).fetchone()[0]
+
+
     def update_user_state(self, user_id, status):
         #обновляем статус пользователя
         with self.connection:
@@ -116,7 +133,20 @@ class Liter:
     def update_user_choice(self, user_id, choice):
         #обновляем статус пользователя
         with self.connection:
-            self.cursor.execute('UPDATE users SET choice = ? WHERE user_id= ?',(choice, user_id))
+            self.cursor.execute('UPDATE users SET choice = ? WHERE user_id= ?',(choice[0], user_id))
+
+    def update_user_token(self, user_id, token):
+     
+        with self.connection:
+            self.cursor.execute('UPDATE users SET token = ? WHERE user_id= ?',(token, user_id))
+
+    def update_user_payment_status(self, user_id, status):
+       
+        with self.connection:
+            self.cursor.execute('UPDATE users SET payment_status = ? WHERE user_id= ?',(status, user_id))
+
+
+
 
     def close(self):
         """ Закрываем текущее соединение с БД """

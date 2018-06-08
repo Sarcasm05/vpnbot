@@ -21,7 +21,7 @@ def find(host, user, db_name):
 
 
     data ='select user_id, token, name_ovpn from payment where status is  NULL and datatime > \'%s\' order by datatime;'
-    date = (datetime.datetime.now()-datetime.timedelta(minutes=10)).strftime("%Y-%m-%d %H:%M:%S")
+    date = (datetime.datetime.now()-datetime.timedelta(minutes=4)).strftime("%Y-%m-%d %H:%M:%S")
 
     cursor = db.cursor()
     cursor.execute(data % date)

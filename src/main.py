@@ -3,9 +3,10 @@ import telebot
 import config
 import keyboard
 import func
-
+from Crypto.Hash import MD5, SHA256
 bot = telebot.TeleBot(config.token)
 keyboard = keyboard.Keyboard(bot)
+
 
 # Начало диалога
 @bot.message_handler(commands=["start"])
@@ -43,33 +44,38 @@ def callback_inline(call):
             bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
                 text="Выберите город: ",reply_markup = keyboard.city(call.data))
             func.change_user_state(call.from_user.id, 2)
-
+        """
         if func.select_user_state(call.from_user.id) == 2 and func.in_city(call.data):
             bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
                 text="Выберите zip: ",reply_markup = keyboard.our_choice(call.data))
             func.change_user_state(call.from_user.id, 3)
-
-        if func.select_user_state(call.from_user.id) == 3 and func.in_zip(call.data):
-            func.update_user_choice(call.from_user.id, call.data)
+        """
+        if func.select_user_state(call.from_user.id) == 2 and func.in_city(call.data):
+            func.update_user_choice(call.from_user.id, func.select_namefile(call.data))
             func.change_user_state(call.from_user.id, 4)
-
+            #md5(a)[0:3]+sha256(a)[7:10]
+            choice = func.select_user_choice(call.from_user.id)
+            
+            h = MD5.new()
+            h.update(choice.encode('utf-8'))
+            g = SHA256.new()
+            g.update(choice.encode('utf-8'))
+            token = h.hexdigest()[0:3] + g.hexdigest()[5:10]
+            func.update_user_token(call.from_user.id, token)
+            func.update_user_payment_status(call.from_user.id, 0)
             markup = telebot.types.InlineKeyboardMarkup()
             markup.add(telebot.types.InlineKeyboardButton(text = 'qiwi', callback_data = 'qiwi'))
-            markup.add(telebot.types.InlineKeyboardButton(text = 'bitcoin', callback_data = 'bitcoin'))
-            markup.add(telebot.types.InlineKeyboardButton(text = 'litecoin', callback_data = 'litecoin'))
             markup.add(telebot.types.InlineKeyboardButton(text = 'Вернуться в меню', callback_data = 'menu'))
 
             bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
                 text="Выберите cпособ оплаты :",reply_markup = markup)
         if func.select_user_state(call.from_user.id) == 4 and call.data == 'qiwi':
+            markup = telebot.types.InlineKeyboardMarkup()
+            markup.add(telebot.types.InlineKeyboardButton(text = 'Вернуться в меню', callback_data = 'menu'))
             bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
-                text="Значение qiwi")
-        if func.select_user_state(call.from_user.id) == 4 and call.data == 'bitcoin':
-            bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
-                text="Значение bitcoin")
-        if func.select_user_state(call.from_user.id) == 4 and call.data == 'litecoin':
-            bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
-                text="Значение litecoin")
+                text="Оплатите qiwi +79013557050 на сумму 10р с комментарием: '" +
+                    str(func.select_user_token(call.from_user.id))+"',\n после оплаты бот в течении нескольких минут вышлет вам .ovpn файл",reply_markup = markup)
+        
         if call.data == 'menu':
             bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text='Выберите пункт меню : ', reply_markup=keyboard.buy_menu())
             func.change_user_state(call.from_user.id, 0)
