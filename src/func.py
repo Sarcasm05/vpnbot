@@ -4,6 +4,13 @@ from config import database_name
 import telebot
 from core.SQLite import Liter
 
+
+def choice(user_id):
+    bd = Liter(database_name)
+    choice = bd.choice(user_id)
+    bd.close()
+    return choice
+
 def add_user(user_id):
     bd = Liter(database_name)
     bd.add_user(user_id)
@@ -148,7 +155,7 @@ def create_keyboard(row):
     markup = telebot.types.InlineKeyboardMarkup()
     myset = set(row)
     for elem in myset :
-        if type(elem[0]) != type(None):
+        if type(elem[0]) != type(None) and len(elem[0])>0:
             markup.add(telebot.types.InlineKeyboardButton(text = elem[0], callback_data = elem[0]))
-    markup.add(telebot.types.InlineKeyboardButton(text = "Вернуться в главное меню", callback_data = 'menu'))    
+    markup.add(telebot.types.InlineKeyboardButton(text = "Return to main menu", callback_data = 'menu'))    
     return markup

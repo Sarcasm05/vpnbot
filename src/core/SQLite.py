@@ -97,7 +97,7 @@ class Liter:
     def add_user(self, user_id):
         #добавляем пользователя
         with self.connection:
-            return self.cursor.execute('INSERT INTO users VALUES(?,?,?)',(user_id, 0, 'null'));
+            return self.cursor.execute('INSERT INTO users VALUES(?,?,?,?,?)',(user_id, 0, 'null',0,0));
 
     def select_user(self, user_id):
         #выбираем пользователя
@@ -145,8 +145,16 @@ class Liter:
         with self.connection:
             self.cursor.execute('UPDATE users SET payment_status = ? WHERE user_id= ?',(status, user_id))
 
-
-
+    def choice(self, user_id):
+        with self.connection:
+            choice  = self.cursor.execute('SELECT choice FROM users WHERE user_id = ?', (user_id,)).fetchone()[0]
+            if choice == 'null' :
+                return 'null'
+            else:
+                country = self.cursor.execute('SELECT countryName FROM vpns WHERE namefile = ?', (choice,)).fetchone()[0]
+                state = self.cursor.execute('SELECT stateProv FROM vpns WHERE namefile = ?', (choice,)).fetchone()[0]
+                city = self.cursor.execute('SELECT city FROM vpns WHERE namefile = ?', (choice,)).fetchone()[0]
+            return country + ', ' + state + ', ' + city
 
     def close(self):
         """ Закрываем текущее соединение с БД """
