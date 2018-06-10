@@ -32,12 +32,9 @@ def handle_text(message):
 def callback_inline(call):
     if call.message:
         if func.select_user_state(call.from_user.id) == 4 and call.data == 'qiwi':
-            markup = telebot.types.InlineKeyboardMarkup()
-            markup.add(telebot.types.InlineKeyboardButton(text = 'Go to payment', url = 'https://qiwi.com/'))
-            markup.add(telebot.types.InlineKeyboardButton(text = 'Back to the menu', callback_data = 'menu'))
             bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
                 text = 'You choosed : ' + func.choice(call.from_user.id)+"\nPay for qiwi +79282765871 for $4 with a comment: " +
-                    str(func.select_user_token(call.from_user.id))+" ,\nafter payment the bot within a few minutes will send you your vpn client and additional insturctions",reply_markup = markup)
+                    str(func.select_user_token(call.from_user.id))+" ,\nafter payment the bot within a few minutes will send you your vpn client and additional insturctions",reply_markup = keyboard.payment_menu())
         
         if func.select_user_state(call.from_user.id) == 2 and func.in_city(call.data):
             func.update_user_choice(call.from_user.id, func.select_namefile(call.data))
