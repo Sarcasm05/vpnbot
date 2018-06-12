@@ -51,12 +51,9 @@ def callback_inline(call):
             token = h.hexdigest()[0:3] + g.hexdigest()[7:10]
             func.update_user_token(call.from_user.id, token)
             func.update_user_payment_status(call.from_user.id, 0)
-            markup = telebot.types.InlineKeyboardMarkup()
-            markup.add(telebot.types.InlineKeyboardButton(text = 'qiwi', callback_data = 'qiwi'))
-            markup.add(telebot.types.InlineKeyboardButton(text = 'Back to the menu', callback_data = 'menu'))
-
+            
             bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
-                text="Choose a payment method :",reply_markup = markup)
+                text="Choose a payment method :",reply_markup = keyboard.payment_menu())
             func.change_user_state(call.from_user.id, 4)
 
  
