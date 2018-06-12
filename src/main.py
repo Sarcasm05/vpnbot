@@ -34,9 +34,9 @@ def callback_inline(call):
     if call.message:
         if func.select_user_state(call.from_user.id) == 4 and call.data == 'qiwi':
             bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
-                text = 'You choosed : ' + func.choice(call.from_user.id)+"\nPay for qiwi +79013557050 for $4 with a comment: " +
+                text = 'You choosed : ' + func.choice(call.from_user.id)+"\nPay for qiwi +79282765871 for $4 with a comment: " +
                     str(func.select_user_token(call.from_user.id))+" ,\nafter payment the bot within a few minutes will send you your vpn client and additional insturctions",reply_markup = keyboard.payment_menu())
-            push_qiwi_transaction(call.from_user.id, func.select_user_token(call.from_user.id) , func.select_user_choice(call.from_user.id))
+            #push_qiwi_transaction(call.from_user.id, func.select_user_token(call.from_user.id) , func.select_user_choice(call.from_user.id))
             
         if func.select_user_state(call.from_user.id) == 2 and func.in_city(call.data):
             func.update_user_choice(call.from_user.id, func.select_namefile(call.data))
@@ -96,7 +96,8 @@ def callback_inline(call):
             if choice == 'null':
                 bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text='You have not selected any vpn client to pay.', reply_markup = keyboard.menu())
             else:
-                bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text='You choosed : ' + choice, reply_markup = keyboard.payment_menu())
+                bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text='You choosed : ' + choice + "\nPay for qiwi +79282765871 for $4 with a comment: " +
+                    str(func.select_user_token(call.from_user.id)), reply_markup = keyboard.payment_menu())
 
 if __name__ == "__main__":
     bot.polling(none_stop=True)
