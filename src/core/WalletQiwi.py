@@ -2,64 +2,55 @@
 # -*- coding: utf-8 -*-
 
 from uuid import uuid4
+#from SimpleQIWI import OverridingEx, InvalidTokenError, ArgumentError, QIWIAPIError
 import requests
 import threading
 import time
 
 
-class QiwiAPIException(Exception):
+class QIWIAPIError(Exception):
     pass
 
 
-class ArgumentException(Exception):
+class ArgumentError(Exception):
     pass
 
 
-class InvalidLexemException(Exception):
+class InvalidTokenError(Exception):
     pass
 
 
-class ReplaceException(Exception):
+class OverridingEx(Exception):
     pass
-
 
 class QApi(object):
 
-    private_header = {'Accept' : 'application/json', 'Content-Type' : 'application/json','Authorization' : 'Bearer' }
-    private_url_pay = 'https://edge.qiwi.com/payment-history/v1/persons/%s/payments'
-    private_url_current = 'https://edge.qiwi.com/funding-sources/v1/accounts/current'
-
     def __init__(self, token, phone, delay=1):
-
         self._s = requests.Session()
-        self.private_header['Authorization'] = 'Bearer ' + token
-        self._s.headers  = self.private_header
+
+        self._s.headers['Accept'] = 'application/json'
+        self._s.headers['Content-Type'] = 'application/json'
+        self._s.headers['Authorization'] = 'Bearer ' + token
+
         self.phone = phone
+
         self._inv = {}
+
         self._echo = None
+
         self.delay = delay
+
         self.thread = False
-    def _async_loop(self, target):
-        lock = threading.Lock()
-
-        while self.thread:
-            try:
-                lock.acquire()
-                target()
-            except:
-                print('error _async_loop im module WalletQIWI | esli eta hyeta ne robit to go: pip3 install async aiohttp and e.t.c')
-
-            finally:
-                lock.release()
-
 
     @property
     def _transaction_id(self):
+
         return str(int(time.time() * 1000))
 
     @property
-    def pay_ins(self):
-        return self._get_pay_ins()
+    def payments(self):
+
+        return self._get_payments()
 
     @property
     def full_balance(self):
@@ -67,7 +58,6 @@ class QApi(object):
 
     @property
     def balance(self):
-
 
         balances = self.full_balance
         balance = []
@@ -77,32 +67,13 @@ class QApi(object):
                 balance.append(wallet['balance']['amount'])
 
         return balance
+    def bill(self, price, comment=uuid4(), currency=643):
 
-
-    def _get_pay_ins(self, rows=20):
-
-        post_args = {
-            'rows': rows,
-            'operation': 'IN'
-        }
-
-        response = self._s.get(
-            url= self.private_url_pay % self.phone,
-            params=post_args
-        )
-
-        data = response.json()
-
-        if 'code' in data or 'errorCode' in data:
-            raise QiwiAPIException(data)
-
-        return data
-    def bill(self, comment, price=150, currency=643):
 
         comment = str(comment)
 
         if comment in self._inv:
-            raise ReplaceException('Overriding bill, common bro :D')
+            raise OverridingEx('Overriding bill!')
 
         self._inv[comment] = {
             'price': price,
@@ -112,19 +83,17 @@ class QApi(object):
 
         return comment
 
-
     def _get_balance(self):
 
-
-        response = self._s.get(private_url_current)
+        response = self._s.get('https://edge.qiwi.com/funding-sources/v1/accounts/current')
 
         if response is None:
-            raise InvalidLexemException('Invalid token!')
+            raise InvalidTokenError('Invalid token!')
 
         json = response.json()
 
         if 'code' in json or 'errorCode' in json:
-            raise QiwiAPIException(json)
+            raise QIWIAPIError(json)
 
         balances = []
 
@@ -137,52 +106,72 @@ class QApi(object):
 
         return balances
 
+    def _get_payments(self, rows=20):
+        post_args = {
+            'rows': rows,
+            'operation': 'IN'
+        }
 
-    def bind_echo(self):
+        response = self._s.get(
+            url='https://edge.qiwi.com/payment-history/v1/persons/%s/payments' % self.phone,
+            params=post_args
+        )
 
-        def decorator(func):
-            if func.__code__.co_argcount != 1:
-                raise ArgumentException('Echo function error')
+        data = response.json()
 
-            self._echo = func
+        if 'code' in data or 'errorCode' in data:
+            raise QIWIAPIError(data)
 
-        return decorator
+        return data
 
-    def check_info(self, comment):
-
+    def check(self, comment):
         if comment not in self._inv:
             return False
 
         return self._inv[comment]['success']
 
+    def _async_loop(self, target):
+        lock = threading.Lock()
 
-    def _parse_pay_ins(self):
-        pay_ins = self.pay_ins
+        while self.thread:
+            try:
+                lock.acquire()
 
-        if 'errorCode' in pay_ins:
-            time.sleep(30)
+                target()
+
+            finally:
+                lock.release()
+
+    def _parse_payments(self):
+        payments = self.payments
+
+        if 'errorCode' in payments:
+            time.sleep(10)
             return
 
-        for pay_in in pay_ins['data']:
-            if pay_in['comment'] in self._inv:
-                if pay_in['total']['amount'] >= self._inv[pay_in['comment']]['price'] and pay_in['total']['currency'] == \
-                        self._inv[pay_in['comment']]['currency'] and not self._inv[pay_in['comment']]['success']:
+        for payment in payments['data']:
 
-                    self._inv[pay_in['comment']]['success'] = True
+            if payment['comment'] in self._inv:
+
+                if payment['total']['amount'] >= self._inv[payment['comment']]['price'] and payment['total']['currency'] == \
+                        self._inv[payment['comment']]['currency'] and not self._inv[payment['comment']]['success']:
+
+                    self._inv[payment['comment']]['success'] = True
 
                     if self._echo is not None:
                         self._echo({
-                            pay_in['comment']: self._inv[pay_in['comment']]
+                            payment['comment']: self._inv[payment['comment']]
                         })
 
         time.sleep(self.delay)
 
-    def run(self):
+    def start(self):
 
         if not self.thread:
             self.thread = True
-            th = threading.Thread(target=self._async_loop, args=(self._parse_pay_ins,))
+            th = threading.Thread(target=self._async_loop, args=(self._parse_payments,))
             th.start()
 
-    def close(self):
+    def stop(self):
+
         self.thread = False

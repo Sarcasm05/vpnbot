@@ -1,4 +1,8 @@
 # -*- coding: utf-8 -*-
+"""
+    created by brdsky
+"""
+
 import sqlite3
 from config import database_name
 import telebot
@@ -42,7 +46,6 @@ def update_user_payment_status(user_id, status):
     bd = Liter(database_name)
     bd.update_user_payment_status(user_id, status)
     bd.close()
-
 
 def select_user_state(user_id):
     bd = Liter(database_name)
@@ -149,13 +152,11 @@ def in_zip(call):
         bd.close()
         return 1
 
-
-
 def create_keyboard(row):
     markup = telebot.types.InlineKeyboardMarkup()
     myset = set(row)
     for elem in myset :
         if type(elem[0]) != type(None) and len(elem[0])>0:
             markup.add(telebot.types.InlineKeyboardButton(text = elem[0], callback_data = elem[0]))
-    markup.add(telebot.types.InlineKeyboardButton(text = "Return to main menu", callback_data = 'menu'))    
+    markup.add(telebot.types.InlineKeyboardButton(text = "Return to main menu", callback_data = 'menu'))
     return markup

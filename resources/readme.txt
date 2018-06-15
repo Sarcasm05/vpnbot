@@ -1,1 +1,1 @@
-prosto resursec
+sql zapros na sozdanie bd 
