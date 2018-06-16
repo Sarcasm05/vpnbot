@@ -4,6 +4,7 @@ CREATE DATABASE activeDB;
 
 USE activeDB;
 
+
 CREATE TABLE User (
 
   user_id INT(50) NOT NULL,
@@ -13,6 +14,7 @@ CREATE TABLE User (
 
 
 SET time_zone ='+03:00';
+
 
 
 CREATE TABLE FileOVPN (
@@ -25,7 +27,7 @@ CREATE TABLE FileOVPN (
   district VARCHAR(50),
   city VARCHAR(50),
   zip_code VARCHAR(16) NOT NULL,
-  status TINYINT(1) DEFAULT NULL,
+
   PRIMARY KEY (file_name)
 ) Engine=InnoDB CHARACTER SET=UTF8;
 

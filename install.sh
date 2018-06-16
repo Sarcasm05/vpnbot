@@ -1,5 +1,5 @@
-echo "install pip3"
-sudo apt-get install python3-pip
+echo "install pip"
+sudo apt-get install python3-pip python-pip
 echo "install mysql-server/mysql-client"
 sudo apt-get install mysql-server mysql-client
 echo "install libmysqlclient-dev"
