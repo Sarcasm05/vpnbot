@@ -96,6 +96,11 @@ def add_pay(token, user_id, file_name, data_req, status):
     with AdoptBranch() as bd:
         bd.execute(AdoptBranch.add_pay(token, user_id, file_name, data_req, status))
 
+def get_payments(user_id):
+    with AdoptBranch() as bd:
+        bd.execute(AdoptBranch.get_payments(user_id))
+        return bd.fetchall()
+
 
 def create_keyboard(row):
     markup = telebot.types.InlineKeyboardMarkup()
