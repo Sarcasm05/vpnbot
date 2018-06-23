@@ -37,7 +37,7 @@ def handle_text(message):
     data = get_payments(message.from_user.id)
     bot.send_message(message.from_user.id, 'all pokypki vashi : dostypnu 24 chasa')
     for msg in data:
-        bot.send_message(message.from_user.id, msg[0])
+        bot.send_message(message.from_user.id, msg[3])
 
 @bot.message_handler(func=lambda mess: "technical support" == mess.text, content_types=['text'])
 def handle_text(message):
@@ -71,7 +71,7 @@ def callback_inline(call):
 
             add_pay(token[0:12], call.from_user.id, tmp, timestamp, 0)
             change_user_state(call.from_user.id, 4)
-            bot.send_message(call.from_user.id, "oplata po kivi  %s  - comment  %s  number. posle oplatu file ovpn bydet dostypen in my choice'" % (token[0:12], '+79998038494'))
+            bot.send_message(call.from_user.id, "oplata po kivi  %s  - comment  %s  number.  i cena 2 rublya nahyi posle oplatu file ovpn bydet dostypen in my choice'" % (token[0:12], '+79998038494'))
 
 if __name__ == "__main__":
     bot.polling(none_stop=True)

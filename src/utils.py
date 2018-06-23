@@ -25,14 +25,11 @@ def select_user_state(user_id):
 def country():
     with AdoptBranch() as bd:
         bd.execute(AdoptBranch.select_country())
-
-
         return bd.fetchall()
 
 def state(country):
     with AdoptBranch() as bd:
         bd.execute(AdoptBranch.select_state(country))
-
         return bd.fetchall()
 
 def city(state):
