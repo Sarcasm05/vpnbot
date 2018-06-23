@@ -36,7 +36,7 @@ def handle_text(message):
 
 @bot.message_handler(func=lambda mess: "technical support" == mess.text, content_types=['text'])
 def handle_text(message):
-    bot.send_message(message.from_user.id, "HELLO WORLD I'M TECH SUPP")
+    bot.send_message(message.from_user.id, "HELLO WORLD I'M TECH SUPP", reply_markup = keyboard.support())
 
 @bot.message_handler(func=lambda mess: "donate" == mess.text, content_types=['text'])
 def handle_text(message):

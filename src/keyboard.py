@@ -42,7 +42,12 @@ class Keyboard:
         markup.add(telebot.types.InlineKeyboardButton(text = 'Go to payment', url = 'https://qiwi.com/'))
         #markup.add(telebot.types.InlineKeyboardButton(text = 'Back to the menu', callback_data = 'menu'))
         return markup
-
+    
+    def support(self):
+        markup = telebot.types.InlineKeyboardMarkup()
+        markup.add(telebot.types.InlineKeyboardButton(text = 'Support', url = 'https://t.me/brdsky'))
+        return markup
+        
     def down_menu(self):
         markup = telebot.types.ReplyKeyboardMarkup(True, False)
         markup.row('buy vpn')
