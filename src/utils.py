@@ -106,5 +106,5 @@ def create_keyboard(row):
     for elem in myset:
         if type(elem[0]) != type(None) and len(elem[0])>0:
             markup.add(telebot.types.InlineKeyboardButton(text = elem[0], callback_data = elem[0]))
-    markup.add(telebot.types.InlineKeyboardButton(text = "Return to main menu", callback_data = 'menu'))
+    #markup.add(telebot.types.InlineKeyboardButton(text = "Return to main menu", callback_data = 'menu'))
     return markup
