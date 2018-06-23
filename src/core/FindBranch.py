@@ -8,6 +8,7 @@ class AdoptBranch:
     def __enter__(self):
         return self.cursor
     def __exit__(self, type, value, traceback):
+        self.connection.commit()
         self.connection.close()
 
     @staticmethod
@@ -30,7 +31,7 @@ class AdoptBranch:
 
     @staticmethod
     def in_city(call):
-        return 'select * FROM FileOVPN WHERE city = %s' % (call)
+        return 'select * FROM FileOVPN WHERE city = \'%s\'' % (call)
 
     @staticmethod
     def add_user(user_id):
@@ -38,11 +39,11 @@ class AdoptBranch:
 
     @staticmethod
     def select_user(user_id):
-        return 'select * FROM User WHERE user_id = %s' % (user_id)
+        return 'select * FROM User WHERE user_id = %d' % (user_id)
 
     @staticmethod
     def select_user_state(user_id):
-        return 'select status FROM User WHERE user_id = %s' % (user_id)
+        return 'select status FROM User WHERE user_id = %d' % (user_id)
 
     @staticmethod
     def update_user_state(user_id, status):

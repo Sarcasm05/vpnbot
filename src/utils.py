@@ -1,5 +1,5 @@
 from core.FindBranch import AdoptBranch
-
+import telebot
 def add_user(user_id):
     with AdoptBranch() as cur:
         cur.execute(AdoptBranch.add_user(user_id))
@@ -13,3 +13,85 @@ def autorisation(user_id):
 def change_user_state(user_id, state):
     with AdoptBranch() as bd:
         bd.execute(AdoptBranch.update_user_state(user_id, state))
+
+
+def select_user_state(user_id):
+    with AdoptBranch() as bd:
+        bd.execute(AdoptBranch.select_user_state(user_id))
+        return bd.fetchone()[0]
+
+
+
+def country():
+    with AdoptBranch() as bd:
+        bd.execute(AdoptBranch.select_country())
+
+
+        return bd.fetchall()
+
+def state(country):
+    with AdoptBranch() as bd:
+        bd.execute(AdoptBranch.select_state(country))
+
+        return bd.fetchall()
+
+def city(state):
+    with AdoptBranch() as bd:
+        bd.execute(AdoptBranch.select_city(state))
+
+        return bd.fetchall()
+
+def our_choice(city):
+    with AdoptBranch() as bd:
+        bd.execute(AdoptBranch.our_choice(city))
+
+        return bd.fetchall()
+
+def exist(call):
+    with AdoptBranch() as bd:
+        if len(bd.exist(call)) == 0:
+
+            return False
+        else :
+
+            return True
+
+def in_country(call):
+    with AdoptBranch() as bd:
+        sign = 1
+        if not bd.execute(AdoptBranch.in_country(call)):
+            sign = 0
+
+
+        return sign
+
+def in_state(call):
+    with AdoptBranch() as bd:
+        if not bd.execute(AdoptBranch.in_state(call)):
+
+            return 0
+        else :
+
+            return 1
+
+def in_city(call):
+    with AdoptBranch() as bd:
+        if not bd.execute(AdoptBranch.in_city(call)):
+
+            return 0
+        else :
+
+            return 1
+
+
+def create_keyboard(row):
+    markup = telebot.types.InlineKeyboardMarkup()
+
+    myset = set(row)
+
+    #print(myset)
+    for elem in myset:
+        if type(elem[0]) != type(None) and len(elem[0])>0:
+            markup.add(telebot.types.InlineKeyboardButton(text = elem[0], callback_data = elem[0]))
+    markup.add(telebot.types.InlineKeyboardButton(text = "Return to main menu", callback_data = 'menu'))
+    return markup

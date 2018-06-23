@@ -7,7 +7,7 @@ def __init__():
             pass
 
 __all__ = ['FindBranch']
-__version__ = '1.0'
+__version__ = '1.1'
 
 if __name__ == '__main__':
     __init__()
