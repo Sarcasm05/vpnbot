@@ -49,6 +49,9 @@ class AdoptBranch:
     def update_user_state(user_id, status):
         return 'update User SET status = %d WHERE user_id= %d' % (status, user_id)
 
+    @staticmethod
+    def get_payments(user_id):
+        return 'select * from Payment where user_id = %d and status = 1' % (user_id)
 
     @staticmethod
     def get_filename(val):

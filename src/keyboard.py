@@ -11,7 +11,7 @@ class Keyboard:
     def __init__(self, bot):
         self.bot = bot
     def hide(self):
-        markup = telebot.types.ReplyKeyboardRemove(True)
+        markup = telebot.types.ReplyKeyboardMarkup(True, True)
         return markup
 
     def country(self):
@@ -55,4 +55,3 @@ class Keyboard:
         markup.row('technical support')
         markup.row('donate')
         return markup
-
