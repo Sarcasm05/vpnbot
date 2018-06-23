@@ -30,8 +30,6 @@ class Keyboard:
     def buy_menu(self):
         buy_markup = telebot.types.InlineKeyboardMarkup()
         buy_markup.add(telebot.types.InlineKeyboardButton(text = 'Select Country', callback_data = 'country'))
-        buy_markup.add(telebot.types.InlineKeyboardButton(text = 'My choice', callback_data = 'account'))
-        buy_markup.add(telebot.types.InlineKeyboardButton(text = 'Technical support', url = 'telegram.me/brdsky'))
         return buy_markup
 
     def menu(self):

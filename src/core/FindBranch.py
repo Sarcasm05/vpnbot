@@ -48,3 +48,12 @@ class AdoptBranch:
     @staticmethod
     def update_user_state(user_id, status):
         return 'update User SET status = %d WHERE user_id= %d' % (status, user_id)
+
+
+    @staticmethod
+    def get_filename(val):
+        return 'select file_name from FileOVPN where city = \'%s\' or countryName = \'%s\' or stateProv = \'%s\'' % (val,val,val)
+
+    @staticmethod
+    def add_pay(token, user_id, file_name, data_req, status):
+        return 'insert into Payment (token, user_id, file_name, data_req, status)  VALUES(\'%s\', %d, \'%s\', \'%s\', %d)' % (token, user_id, file_name, data_req, status)

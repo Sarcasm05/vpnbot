@@ -83,6 +83,19 @@ def in_city(call):
 
             return 1
 
+def add_payment(call):
+    with AdoptBranch() as bd:
+        bd.execute(AdoptBranch.in_zip(call))
+
+def get_filename(val):
+    with AdoptBranch() as bd:
+        bd.execute(AdoptBranch.get_filename(val))
+        return bd.fetchone()[0]
+
+def add_pay(token, user_id, file_name, data_req, status):
+    with AdoptBranch() as bd:
+        bd.execute(AdoptBranch.add_pay(token, user_id, file_name, data_req, status))
+
 
 def create_keyboard(row):
     markup = telebot.types.InlineKeyboardMarkup()
