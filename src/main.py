@@ -23,7 +23,28 @@ def cmd_start(message):
     else:
         add_user(message.from_user.id)
 
-    bot.send_message(message.chat.id, "With this bot you can buy a vpn client", reply_markup = keyboard.buy_menu())
+    bot.send_message(message.chat.id, "With this bot you can buy a vpn client", reply_markup = keyboard.down_menu())
+
+@bot.message_handler(func=lambda mess: "buy vpn" == mess.text, content_types=['text'])
+def handle_text(message):
+    change_user_state(call.from_user.id, 0)
+    bot.send_message(message.from_user.id, 'Select country: ', reply_markup=keyboard.country())
+
+
+@bot.message_handler(func=lambda mess: "my choice" == mess.text, content_types=['text'])
+def handle_text(message):
+    change_user_state(call.from_user.id, 0)
+    bot.send_message(message.from_user.id, "my choice is Iosif's dick")
+
+@bot.message_handler(func=lambda mess: "technical support" == mess.text, content_types=['text'])
+def handle_text(message):
+    change_user_state(call.from_user.id, 0)
+    bot.send_message(message.from_user.id, "HELLO WORLD I'M TECH SUPP")
+
+@bot.message_handler(func=lambda mess: "donate" == mess.text, content_types=['text'])
+def handle_text(message):
+    change_user_state(call.from_user.id, 0)
+    bot.send_message(message.from_user.id, 'HELP OUR PROJECT PLEEEEASE, WE ARE POOR STUNETS OF BAUMAN UNIVERSITY')
 
 
 
@@ -31,9 +52,9 @@ def cmd_start(message):
 def callback_inline(call):
     if call.message:
 
-        if call.data == 'menu':
-            bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text='Select the menu item : ', reply_markup = keyboard.buy_menu())
-            change_user_state(call.from_user.id, 0)
+        #if call.data == 'menu':
+        #    bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text='Select the menu item : ', reply_markup = keyboard.buy_menu())
+        #v    change_user_state(call.from_user.id, 0)
 
         if select_user_state(call.from_user.id) == 1 and in_state(call.data):
             bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
@@ -47,9 +68,9 @@ def callback_inline(call):
 
             change_user_state(call.from_user.id, 1)
 
-        if call.data == "country" and select_user_state(call.from_user.id) == 0 :
-            bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
-                text="Select country: ",reply_markup = keyboard.country())
+        #if call.data == "country" and select_user_state(call.from_user.id) == 0 :
+        #    bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
+        #        text="Select country: ",reply_markup = keyboard.country())
 
         if select_user_state(call.from_user.id) == 2 and in_city(call.data):
 
