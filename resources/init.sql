@@ -7,12 +7,10 @@ USE activeDB;
 CREATE TABLE User (
 
   user_id INT(50) NOT NULL,
-  status INT(3) DEFAULT NULL
+  status INT(3) DEFAULT NULL,
   PRIMARY KEY(user_id)
 ) Engine=InnoDB CHARACTER SET=UTF8;
 
-
-SET time_zone ='+03:00';
 
 
 CREATE TABLE FileOVPN (
@@ -74,16 +72,17 @@ CREATE TABLE Characteristics (
 ) Engine=InnoDB CHARACTER SET=UTF8;
 
 
-load data local infile '/home/sher/tableFILEovpn.csv'
+load data local infile '/home/monsherko/Downloads/tableFILEovpn.csv'
 
 into table FileOVPN fields terminated  by ';' lines terminated by '\n'
 ignore 1 rows
 (file_name, login, password, countryName, stateProv, district, city, zip_code)
+;
 
 
-
-load data local infile '/home/sher/characteristic.csv'
+load data local infile '/home/monsherko/Downloads/characteristic.csv'
 
 into table Characteristics fields terminated  by ';' lines terminated by '\n'
 ignore 1 rows
 (file_name, site, ip, continentCode, continentName, countryCode, countryName, isEuMember, currencyCode, currencyName, phonePrefix, languages1, languages2,   latitude, longitude, gmtOffset, timeZone, asNumber, asName, isp, linkType, organization, isCrawler, isProxy, threatLevel);
+;

@@ -6,7 +6,7 @@ def __init__():
         except:
             pass
 
-__all__ = ['qiwi_wallet', 'SQLite', 'WalletQiwi']
+__all__ = ['FindBranch']
 __version__ = '1.0'
 
 if __name__ == '__main__':
