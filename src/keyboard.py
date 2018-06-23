@@ -44,7 +44,7 @@ class Keyboard:
         return markup
 
     def down_menu(self):
-        markup = telebot.types.ReplyKeyboardMarkup()
+        markup = telebot.types.ReplyKeyboardMarkup(True, False)
         markup.row('buy vpn')
         markup.row('my choice')
         markup.row('technical support')

@@ -27,23 +27,19 @@ def cmd_start(message):
 
 @bot.message_handler(func=lambda mess: "buy vpn" == mess.text, content_types=['text'])
 def handle_text(message):
-    change_user_state(call.from_user.id, 0)
+    change_user_state(message.from_user.id, 0)
     bot.send_message(message.from_user.id, 'Select country: ', reply_markup=keyboard.country())
-
 
 @bot.message_handler(func=lambda mess: "my choice" == mess.text, content_types=['text'])
 def handle_text(message):
-    change_user_state(call.from_user.id, 0)
     bot.send_message(message.from_user.id, "my choice is Iosif's dick")
 
 @bot.message_handler(func=lambda mess: "technical support" == mess.text, content_types=['text'])
 def handle_text(message):
-    change_user_state(call.from_user.id, 0)
     bot.send_message(message.from_user.id, "HELLO WORLD I'M TECH SUPP")
 
 @bot.message_handler(func=lambda mess: "donate" == mess.text, content_types=['text'])
 def handle_text(message):
-    change_user_state(call.from_user.id, 0)
     bot.send_message(message.from_user.id, 'HELP OUR PROJECT PLEEEEASE, WE ARE POOR STUNETS OF BAUMAN UNIVERSITY')
 
 
