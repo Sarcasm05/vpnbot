@@ -41,14 +41,8 @@ def handle_text(message):
 
 @bot.message_handler(func=lambda mess: "technical support" == mess.text, content_types=['text'])
 def handle_text(message):
-<<<<<<< HEAD
     bot.send_message(message.from_user.id, "HELLO WORLD I'M TECH SUPP", reply_markup = keyboard.support())
 
-=======
-    """
-    tyt perevodit' na sapporta
-    """
->>>>>>> 99700ca9115790c7859ff230025ffae3fb83e12f
 @bot.message_handler(func=lambda mess: "donate" == mess.text, content_types=['text'])
 def handle_text(message):
     change_user_state(message.from_user.id, 0)
@@ -59,39 +53,25 @@ def handle_text(message):
 @bot.callback_query_handler(func=lambda call: True)
 def callback_inline(call):
     if call.message:
-
         if select_user_state(call.from_user.id) == 1 and in_state(call.data):
             bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
                 text="Select city: ",reply_markup = keyboard.city(call.data))
             change_user_state(call.from_user.id, 2)
 
         if select_user_state(call.from_user.id) == 0 and in_country(call.data):
-
             bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
                 text="Select district: ",reply_markup = keyboard.state(call.data))
-
             change_user_state(call.from_user.id, 1)
 
 
         if select_user_state(call.from_user.id) == 2 and in_city(call.data):
-
-            ts = time.time()
-            timestamp = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S')
-
+            timestamp = datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S')
             tmp = get_filename(call.data)
-            elem = hashlib.md5(tmp.encode('utf-8')).hexdigest()
-            token = hashlib.md5((str(call.from_user.id)  + elem[5:14]).encode('utf-8')).hexdigest()
-
+            token = hashlib.md5((str(call.from_user.id)  +  hashlib.md5(tmp.encode('utf-8')).hexdigest()[5:14]).encode('utf-8')).hexdigest()
 
             add_pay(token[0:12], call.from_user.id, tmp, timestamp, 0)
             change_user_state(call.from_user.id, 4)
             bot.send_message(call.from_user.id, "oplata po kivi  %s  - comment  %s  number. posle oplatu file ovpn bydet dostypen in my choice'" % (token[0:12], '+79998038494'))
-
-
-
-
-
-
 
 if __name__ == "__main__":
     bot.polling(none_stop=True)
