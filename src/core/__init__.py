@@ -6,8 +6,8 @@ def __init__():
         except:
             pass
 
-__all__ = ['FindBranch']
-__version__ = '1.1'
+__all__ = ['FindBranch, qiwiwallet']
+__version__ = '1.2'
 
 if __name__ == '__main__':
     __init__()
