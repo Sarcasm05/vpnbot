@@ -104,10 +104,7 @@ def get_payments(user_id):
 
 def create_keyboard(row):
     markup = telebot.types.InlineKeyboardMarkup()
-
     myset = set(row)
-
-    #print(myset)
     for elem in myset:
         if type(elem[0]) != type(None) and len(elem[0])>0:
             markup.add(telebot.types.InlineKeyboardButton(text = elem[0], callback_data = elem[0]))

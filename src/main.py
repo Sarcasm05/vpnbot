@@ -31,11 +31,11 @@ def handle_text(message):
     bot.send_message(message.from_user.id, 'Select country: ', reply_markup=keyboard.country())
 
 
-@bot.message_handler(func=lambda mess: "my choice" == mess.text, content_types=['text'])
+@bot.message_handler(func=lambda mess: "my purchases" == mess.text, content_types=['text'])
 def handle_text(message):
 #    change_user_state(message.from_user.id, 0)
     data = get_payments(message.from_user.id)
-    bot.send_message(message.from_user.id, 'all pokypki vashi : dostypnu 24 chasa')
+    bot.send_message(message.from_user.id, 'All your purchases are available 24 hours')
     for msg in data:
         bot.send_message(message.from_user.id, msg[3])
 
@@ -79,11 +79,9 @@ def callback_inline(call):
         if select_user_state(call.from_user.id) == 3 and call.data == 'qiwi':
             change_user_state(call.from_user.id, 4)
             token = get_token(call.from_user.id)[0]
-            print(token)
-            print(type(token))
             bot.send_message(call.from_user.id, config.str_payment % (token[0], '+79998038494'))
 
         if select_user_state(call.from_user.id) == 3 and call.data == 'bitcoin':
-            bot.send_message(call.from_user.id, config.donate + " - our bitcoin adress")
+            bot.send_message(call.from_user.id,"Pay for 4$ to " + config.donate + " bitcoin adress")
 if __name__ == "__main__":
     bot.polling(none_stop=True)

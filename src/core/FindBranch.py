@@ -54,7 +54,7 @@ class AdoptBranch:
 
     @staticmethod
     def get_payments(user_id):
-        return 'select * from Payment where user_id = %d and status = 1' % (user_id)
+        return 'select * from Payment where user_id = %d and status = 0' % (user_id)
 
     @staticmethod
     def get_filename(val):
