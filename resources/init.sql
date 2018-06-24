@@ -72,7 +72,7 @@ CREATE TABLE Characteristics (
 ) Engine=InnoDB CHARACTER SET=UTF8;
 
 
-load data local infile '/home/monsherko/Downloads/tableFILEovpn.csv'
+load data local infile '/home/admin1/Desktop/vpnbot/resources/tableFILEovpn.csv'
 
 into table FileOVPN fields terminated  by ';' lines terminated by '\n'
 ignore 1 rows
@@ -80,7 +80,7 @@ ignore 1 rows
 ;
 
 
-load data local infile '/home/monsherko/Downloads/characteristic.csv'
+load data local infile '/home/admin1/Desktop/vpnbot/resources/characteristic.csv'
 
 into table Characteristics fields terminated  by ';' lines terminated by '\n'
 ignore 1 rows

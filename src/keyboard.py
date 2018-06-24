@@ -37,6 +37,12 @@ class Keyboard:
         markup.add(telebot.types.InlineKeyboardButton(text = 'Back to the menu', callback_data = 'menu'))
         return markup
 
+    def payment_method(self):
+        markup = telebot.types.InlineKeyboardMarkup()
+        markup.add(telebot.types.InlineKeyboardButton(text = 'qiwi', callback_data = 'qiwi'))
+        markup.add(telebot.types.InlineKeyboardButton(text = 'bitcoin', callback_data = 'bitcoin'))
+        return markup
+        
     def payment_menu(self):
         markup = telebot.types.InlineKeyboardMarkup()
         markup.add(telebot.types.InlineKeyboardButton(text = 'Go to payment', url = 'https://qiwi.com/'))

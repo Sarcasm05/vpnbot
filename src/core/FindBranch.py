@@ -44,6 +44,9 @@ class AdoptBranch:
     @staticmethod
     def select_user_state(user_id):
         return 'select status FROM User WHERE user_id = %d' % (user_id)
+    @staticmethod
+    def get_token(user_id):
+        return 'select token from Payment where user_id = %d' % (user_id)
 
     @staticmethod
     def update_user_state(user_id, status):

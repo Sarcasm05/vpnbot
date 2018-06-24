@@ -20,7 +20,10 @@ def select_user_state(user_id):
         bd.execute(AdoptBranch.select_user_state(user_id))
         return bd.fetchone()[0]
 
-
+def get_token(user_id):
+    with AdoptBranch() as bd:
+        bd.execute(AdoptBranch.get_token(user_id))
+        return bd.fetchall()
 
 def country():
     with AdoptBranch() as bd:

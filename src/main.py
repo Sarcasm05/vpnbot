@@ -65,13 +65,25 @@ def callback_inline(call):
 
 
         if select_user_state(call.from_user.id) == 2 and in_city(call.data):
+            
+            bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
+                text="Select pay method: ",reply_markup = keyboard.payment_method())
+            change_user_state(call.from_user.id, 3)
             timestamp = datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S')
             tmp = get_filename(call.data)
             token = hashlib.md5((str(call.from_user.id)  +  hashlib.md5(tmp.encode('utf-8')).hexdigest()[5:14]).encode('utf-8')).hexdigest()
 
             add_pay(token[0:12], call.from_user.id, tmp, timestamp, 0)
-            change_user_state(call.from_user.id, 4)
-            bot.send_message(call.from_user.id, config.str_payment % (token[0:12], '+79998038494'))
+       
 
+        if select_user_state(call.from_user.id) == 3 and call.data == 'qiwi':
+            change_user_state(call.from_user.id, 4)
+            token = get_token(call.from_user.id)[0]
+            print(token)
+            print(type(token))
+            bot.send_message(call.from_user.id, config.str_payment % (token[0], '+79998038494'))
+
+        if select_user_state(call.from_user.id) == 3 and call.data == 'bitcoin':
+            bot.send_message(call.from_user.id, config.donate)
 if __name__ == "__main__":
     bot.polling(none_stop=True)
