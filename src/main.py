@@ -46,7 +46,7 @@ def handle_text(message):
 @bot.message_handler(func=lambda mess: "donate" == mess.text, content_types=['text'])
 def handle_text(message):
     change_user_state(message.from_user.id, 0)
-    bot.send_message(message.from_user.id, config.donate)
+    bot.send_message(message.from_user.id, config.donate + " - our bitcoin adress")
 
 
 
@@ -84,6 +84,6 @@ def callback_inline(call):
             bot.send_message(call.from_user.id, config.str_payment % (token[0], '+79998038494'))
 
         if select_user_state(call.from_user.id) == 3 and call.data == 'bitcoin':
-            bot.send_message(call.from_user.id, config.donate)
+            bot.send_message(call.from_user.id, config.donate + " - our bitcoin adress")
 if __name__ == "__main__":
     bot.polling(none_stop=True)
