@@ -2,7 +2,7 @@ import MySQLdb
 
 class AdoptBranch:
     def __init__(self):
-        self.connection =  MySQLdb.connect(host='localhost',user='root', db='activeDB')
+        self.connection =  MySQLdb.connect(host='localhost',user='root', db='activeDB', passwd='HavanaClub')
         self.cursor = self.connection.cursor()
 
     def __enter__(self):

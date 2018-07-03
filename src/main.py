@@ -54,7 +54,7 @@ def handle_text(message):
 
 
     for msg in set(arr):
-        with open('/home/monsherko/vpnbot/resources/root/%s' % msg) as fileObj:
+        with open('/root/vpnbot/resources/root/%s' % msg) as fileObj:
             pair = get_login_pass(msg)[0]
             bot.send_document(message.from_user.id, fileObj, caption='login %s  password %s' %(pair[0], pair[1]))
 
