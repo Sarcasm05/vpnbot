@@ -101,10 +101,25 @@ def get_payments(user_id):
         bd.execute(AdoptBranch.get_payments(user_id))
         return bd.fetchall()
 
+def get_login_pass(filename):
+    with AdoptBranch() as bd:
+        bd.execute(AdoptBranch.get_login_pass(filename))
+        return bd.fetchall()
+
+def cmp_token(token):
+    with AdoptBranch() as bd:
+        bd.execute(AdoptBranch.cmp_token(token))
+        return bd.fetchall()
+
+def get_zip(zip_code):
+    with AdoptBranch() as bd:
+        bd.execute(AdoptBranch.get_zip(zip_code))
+        return bd.fetchall()
 
 def create_keyboard(row):
     markup = telebot.types.InlineKeyboardMarkup()
     myset = set(row)
+    sorted(myset, key=str)
     for elem in myset:
         if type(elem[0]) != type(None) and len(elem[0])>0:
             markup.add(telebot.types.InlineKeyboardButton(text = elem[0], callback_data = elem[0]))

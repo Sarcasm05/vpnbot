@@ -13,7 +13,7 @@ class AdoptBranch:
 
     @staticmethod
     def select_country():
-        return 'select distinct countryName from FileOVPN'
+        return 'select distinct countryName from FileOVPN group by countryName order by countryName'
     @staticmethod
     def select_state(country):
         return 'select stateProv FROM FileOVPN WHERE countryName = \'%s\'' % (country)
@@ -54,12 +54,22 @@ class AdoptBranch:
 
     @staticmethod
     def get_payments(user_id):
-        return 'select * from Payment where user_id = %d and status = 0' % (user_id)
+        return 'select * from Payment where user_id = %d and status = 1'  % (user_id)
 
     @staticmethod
     def get_filename(val):
-        return 'select file_name from FileOVPN where city = \'%s\' or countryName = \'%s\' or stateProv = \'%s\'' % (val,val,val)
+        return 'select file_name from FileOVPN where city = \'%s\'' % (val)
 
     @staticmethod
     def add_pay(token, user_id, file_name, data_req, status):
         return 'insert into Payment (token, user_id, file_name, data_req, status)  VALUES(\'%s\', %d, \'%s\', \'%s\', %d)' % (token, user_id, file_name, data_req, status)
+
+    @staticmethod
+    def get_login_pass(filename):
+        return 'select login, password from FileOVPN where file_name = \'%s\'' % (filename)
+    @staticmethod
+    def cmp_token(token):
+        return 'select file_name from Payment where status = 1 and token = \'%s\'' % (token)
+    @staticmethod
+    def get_zip(zip_code):
+        return 'select zip_code from FileOVPN where zip_code = \'%s\'' % (zip_code)

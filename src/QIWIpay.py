@@ -8,7 +8,7 @@ def func():
     tmp =  q.payments
     print(tmp)
     for x in tmp['data']:
-        if x['statusText'] == 'Success'  and x['type'] == 'IN' and x['sum']['amount'] > 1:
+        if x['statusText'] == 'Success'  and x['type'] == 'IN' and x['sum']['amount'] > 299:
             tmp = x['comment']
             print(tmp)
             connection =  MySQLdb.connect(host='localhost',user='root', db='activeDB')
@@ -21,5 +21,5 @@ def func():
 
 
 while True:
-    time.sleep(360)
+    time.sleep(720 + random.randint(1,30))
     func()
