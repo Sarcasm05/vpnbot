@@ -1,3 +1,4 @@
+import random
 import MySQLdb
 from core.qiwiwallet import QApi
 import time
@@ -11,7 +12,7 @@ def func():
         if x['statusText'] == 'Success'  and x['type'] == 'IN' and x['sum']['amount'] > 299:
             tmp = x['comment']
             print(tmp)
-            connection =  MySQLdb.connect(host='localhost',user='root', db='activeDB')
+            connection =  MySQLdb.connect(host='localhost',user='root', db='activeDB', passwd='HavanaClub')
             cursor = connection.cursor()
             cursor.execute('update Payment set  status = 1 WHERE  token = \'%s\'' % (tmp))
             connection.commit()
@@ -21,5 +22,6 @@ def func():
 
 
 while True:
-    time.sleep(720 + random.randint(1,30))
     func()
+    time.sleep(720 + random.randint(1,30))
+   # func()
