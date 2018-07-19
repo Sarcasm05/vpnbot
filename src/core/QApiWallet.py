@@ -33,13 +33,9 @@ class QApi(object):
         self._s.headers['Authorization'] = 'Bearer ' + token
 
         self.phone = phone
-
         self._inv = {}
-
         self._echo = None
-
         self.delay = delay
-
         self.thread = False
 
     @property
@@ -68,10 +64,7 @@ class QApi(object):
 
         return balance
     def bill(self, price, comment=uuid4(), currency=643):
-
-
         comment = str(comment)
-
         if comment in self._inv:
             raise OverridingEx('Overriding bill!')
 
@@ -86,10 +79,8 @@ class QApi(object):
     def _get_balance(self):
 
         response = self._s.get('https://edge.qiwi.com/funding-sources/v1/accounts/current')
-
         if response is None:
             raise InvalidTokenError('Invalid token!')
-
         json = response.json()
 
         if 'code' in json or 'errorCode' in json:
@@ -136,7 +127,6 @@ class QApi(object):
         while self.thread:
             try:
                 lock.acquire()
-
                 target()
 
             finally:
@@ -155,9 +145,7 @@ class QApi(object):
 
                 if payment['total']['amount'] >= self._inv[payment['comment']]['price'] and payment['total']['currency'] == \
                         self._inv[payment['comment']]['currency'] and not self._inv[payment['comment']]['success']:
-
                     self._inv[payment['comment']]['success'] = True
-
                     if self._echo is not None:
                         self._echo({
                             payment['comment']: self._inv[payment['comment']]
@@ -173,5 +161,4 @@ class QApi(object):
             th.start()
 
     def stop(self):
-
         self.thread = False

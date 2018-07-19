@@ -27,7 +27,7 @@ class Keyboard:
         return utils.create_keyboard(utils.our_choice(call))
 
 
-    def buy_menu_select_manual(self):
+    def buy_menu(self):
         buy_markup = telebot.types.InlineKeyboardMarkup()
         buy_markup.add(telebot.types.InlineKeyboardButton(text = 'Select Country', callback_data = 'country'))
         return buy_markup
@@ -56,15 +56,16 @@ class Keyboard:
 
     def down_menu(self):
         markup = telebot.types.ReplyKeyboardMarkup(True, False)
-        markup.row(config.buyVPN, config.myPurchase)
+        markup.row(config.byeVPN, config.myPurchase)
         markup.row(config.techSupport)
         return markup
 
-    def buy_menu(self):
+    def bye_menu(self):
         markup = telebot.types.ReplyKeyboardMarkup(True, False)
         markup.row(config.findByZip, config.selectManual)
         markup.row(config.backToMenu)
         return markup
     def back_menu(self):
         markup = telebot.types.ReplyKeyboardMarkup(True, False)
+        markup.OneTimeKeyboard = True
         markup.row(config.backToMenu)

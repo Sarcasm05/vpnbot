@@ -33,12 +33,12 @@ def country():
 def state(country):
     with AdoptBranch() as bd:
         bd.execute(AdoptBranch.select_state(country))
-        print("ASD)")
         return bd.fetchall()
 
 def city(state):
     with AdoptBranch() as bd:
         bd.execute(AdoptBranch.select_city(state))
+
         return bd.fetchall()
 
 def our_choice(city):
@@ -46,36 +46,41 @@ def our_choice(city):
         bd.execute(AdoptBranch.our_choice(city))
 
         return bd.fetchall()
-def update_status_product(file_name,sign):
-    with AdoptBranch() as bd:
-        bd.execute(AdoptBranch.update_status_product(file_name,sign))
+
 def exist(call):
     with AdoptBranch() as bd:
         if len(bd.exist(call)) == 0:
+
             return False
         else :
+
             return True
 
 def in_country(call):
     with AdoptBranch() as bd:
-        sign = True
+        sign = 1
         if not bd.execute(AdoptBranch.in_country(call)):
-            sign = False
+            sign = 0
+
 
         return sign
 
 def in_state(call):
     with AdoptBranch() as bd:
-        sign = True
         if not bd.execute(AdoptBranch.in_state(call)):
-            sign = False
-        print("SSS")
-        return sign
+
+            return 0
+        else :
+
+            return 1
+
 def in_city(call):
     with AdoptBranch() as bd:
         if not bd.execute(AdoptBranch.in_city(call)):
+
             return 0
         else :
+
             return 1
 
 def add_payment(call):
@@ -120,15 +125,3 @@ def create_keyboard(row):
             markup.add(telebot.types.InlineKeyboardButton(text = elem[0], callback_data = elem[0]))
     #markup.add(telebot.types.InlineKeyboardButton(text = "Return to main menu", callback_data = 'menu'))
     return markup
-
-def get_all():
-    with AdoptBranch() as bd:
-        bd.execute(AdoptBranch.get_all())
-        return bd.fetchall()
-
-def update_status_payment(file_name,sign):
-    with AdoptBranch() as bd:
-        bd.execute(AdoptBranch.update_status_payment(file_name,sign))
-def delete_payment(data_req, token):
-    with AdoptBranch() as bd:
-        bd.execute(AdoptBranch.delete_payment(data_req, token))
